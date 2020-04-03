@@ -25,5 +25,13 @@ public class ProductService implements IProductService {
 		productDAO.insertOrUpdate(entity);
 		return new ResponseModel(HttpStatus.OK, "Insert Product successful");
 	}
+	public ResponseModel deleteProduct(Product entity) {
+		productDAO.delete(entity);
+		return new ResponseModel(HttpStatus.OK, "Delete Product successful");
+	}
+	public ResponseModel editProduct(Product entity) {
+		productDAO.insertOrUpdate(entity);
+		return new ResponseModel(HttpStatus.OK, "Edit Product successful");
+	}
 
 }
