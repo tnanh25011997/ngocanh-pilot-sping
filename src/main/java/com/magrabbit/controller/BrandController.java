@@ -3,6 +3,7 @@ package com.magrabbit.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.magrabbit.entity.Brand;
 import com.magrabbit.service.IBrandService;
+import com.magrabbit.utility.PageModel;
 import com.magrabbit.utility.ResponseModel;
 
 
@@ -52,6 +55,11 @@ public class BrandController {
 	@GetMapping(value = "/get-brand/{brandName}")
 	public Brand getAllBrandName(@PathVariable String brandName) {
 		return brandService.findBybrandName(brandName);
+	}
+	
+	@GetMapping(value = "/get-brands-paginate", params = {"page"})
+	public PageModel<Brand> getBrandsByPageable(@RequestParam(name = "page", defaultValue = "0") int page) {
+		return brandService.getBrandsByPageable(PageRequest.of(page, 4), page);
 	}
 	
 	

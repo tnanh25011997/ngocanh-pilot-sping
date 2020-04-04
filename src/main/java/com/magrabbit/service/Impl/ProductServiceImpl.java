@@ -12,7 +12,7 @@ import com.magrabbit.service.IProductService;
 import com.magrabbit.utility.ResponseModel;
 
 @Service
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements IProductService {
 
 	@Autowired
 	private IProductDAO productDAO;

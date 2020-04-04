@@ -3,18 +3,20 @@ package com.magrabbit.service.Impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.magrabbit.dao.IBrandDAO;
 import com.magrabbit.entity.Brand;
 import com.magrabbit.service.IBrandService;
+import com.magrabbit.utility.PageModel;
 import com.magrabbit.utility.ResponseModel;
 
 
 
 @Service
-public class BrandService implements IBrandService {
+public class BrandServiceImpl implements IBrandService {
 	@Autowired
 	private IBrandDAO brandDAO;
 	public List<String> getAllBrandName() {
@@ -40,6 +42,10 @@ public class BrandService implements IBrandService {
 	public Brand findBybrandName(String brandName) {
 		// TODO Auto-generated method stub
 		return brandDAO.findBybrandName(brandName);
+	}
+	public PageModel<Brand> getBrandsByPageable(Pageable pageable, int currentPage) {
+		// TODO Auto-generated method stub
+		return brandDAO.getBrandsByPageable(pageable, currentPage);
 	}
 	
 }
