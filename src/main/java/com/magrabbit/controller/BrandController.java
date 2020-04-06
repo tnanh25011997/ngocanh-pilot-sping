@@ -57,9 +57,10 @@ public class BrandController {
 		return brandService.findBybrandName(brandName);
 	}
 	
-	@GetMapping(value = "/get-brands-paginate", params = {"page"})
-	public PageModel<Brand> getBrandsByPageable(@RequestParam(name = "page", defaultValue = "0") int page) {
-		return brandService.getBrandsByPageable(PageRequest.of(page, 4), page);
+	@GetMapping(value = "/get-brands-paginate", params = { "page", "name" })
+	public PageModel<Brand> getBrandsByPageable(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "name") String name) {
+		return brandService.getBrandsByPageable(name, PageRequest.of(page, 4), page);
 	}
 	
 	

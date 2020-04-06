@@ -13,6 +13,6 @@ public interface IBrandDAO extends GenericDAO<Brand, Integer> {
 	
 	Brand findBybrandName(String brandName);
 	
-	PageModel<Brand> getBrandsByPageable(Pageable pageable, int currentPage);
+	PageModel<Brand> getBrandsByPageable(String brandName, Pageable pageable, int currentPage);
 	
 }

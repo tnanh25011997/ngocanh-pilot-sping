@@ -43,9 +43,9 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		return brandDAO.findBybrandName(brandName);
 	}
-	public PageModel<Brand> getBrandsByPageable(Pageable pageable, int currentPage) {
+	public PageModel<Brand> getBrandsByPageable(String brandName, Pageable pageable, int currentPage) {
 		// TODO Auto-generated method stub
-		return brandDAO.getBrandsByPageable(pageable, currentPage);
+		return brandDAO.getBrandsByPageable(brandName, pageable, currentPage);
 	}
 	
 }

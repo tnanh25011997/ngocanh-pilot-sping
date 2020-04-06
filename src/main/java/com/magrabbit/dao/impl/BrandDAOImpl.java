@@ -1,5 +1,6 @@
 package com.magrabbit.dao.impl;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -56,12 +57,19 @@ public class BrandDAOImpl implements IBrandDAO {
 		return brandRepository.findBybrandName(brandName);
 	}
 
-	public PageModel<Brand> getBrandsByPageable(Pageable pageable, int currentPage) {
+	public PageModel<Brand> getBrandsByPageable(String brandName, Pageable pageable, int currentPage) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
 		Root<Brand> brand = cq.from(Brand.class);
 		cq.select(brand);
-
+		javax.persistence.criteria.Path<String> br = brand.get("brandName");
+		
+		// Condition if searching by brand name
+		if (brandName != "") {
+			Predicate name = cb.like(br, "%" + brandName + "%");
+			cq.where(name);
+		}
+		
 		
 
 		TypedQuery<Brand> query = em.createQuery(cq);

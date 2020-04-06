@@ -18,6 +18,6 @@ public interface IBrandService {
 	ResponseModel editBrand(Brand entity);
 	Brand findBybrandName(String brandName);
 	
-	PageModel<Brand> getBrandsByPageable(Pageable pageable, int currentPage);
+	PageModel<Brand> getBrandsByPageable(String brandName, Pageable pageable, int currentPage);
 	
 } 
