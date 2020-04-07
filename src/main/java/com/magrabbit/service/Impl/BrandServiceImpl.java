@@ -17,32 +17,40 @@ import com.magrabbit.utility.ResponseModel;
 
 @Service
 public class BrandServiceImpl implements IBrandService {
+	
 	@Autowired
 	private IBrandDAO brandDAO;
+	
 	public List<String> getAllBrandName() {
 		// TODO Auto-generated method stub
 		return brandDAO.getAllBrandName();
 	}
+	
 	public List<Brand> findAll() {
 		// TODO Auto-generated method stub
 		return brandDAO.findAll();
 	}
+	
 	public ResponseModel addBrand(Brand entity) {
 		brandDAO.insertOrUpdate(entity);
 		return new ResponseModel(HttpStatus.OK, "Insert Brand successful");
 	}
+	
 	public ResponseModel deleteBrand(Brand entity) {
 		brandDAO.delete(entity);
 		return new ResponseModel(HttpStatus.OK, "Delete Brand successful");
 	}
+	
 	public ResponseModel editBrand(Brand entity) {
 		brandDAO.insertOrUpdate(entity);
 		return new ResponseModel(HttpStatus.OK, "Edit Brand successful");
 	}
+	
 	public Brand findBybrandName(String brandName) {
 		// TODO Auto-generated method stub
 		return brandDAO.findBybrandName(brandName);
 	}
+	
 	public PageModel<Brand> getBrandsByPageable(String brandName, Pageable pageable, int currentPage) {
 		// TODO Auto-generated method stub
 		return brandDAO.getBrandsByPageable(brandName, pageable, currentPage);

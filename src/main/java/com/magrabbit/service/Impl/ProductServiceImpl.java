@@ -3,13 +3,16 @@ package com.magrabbit.service.Impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.magrabbit.dao.IProductDAO;
 import com.magrabbit.entity.Product;
 import com.magrabbit.service.IProductService;
+import com.magrabbit.utility.PageModel;
 import com.magrabbit.utility.ResponseModel;
+import com.magrabbit.utility.SearchModel;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -32,6 +35,10 @@ public class ProductServiceImpl implements IProductService {
 	public ResponseModel editProduct(Product entity) {
 		productDAO.insertOrUpdate(entity);
 		return new ResponseModel(HttpStatus.OK, "Edit Product successful");
+	}
+	public PageModel<Product> getProductsByPageable(SearchModel searchModel, Pageable pageable, int currentPage) {
+		
+		return productDAO.getProductsByPageable(searchModel, pageable, currentPage);
 	}
 
 }

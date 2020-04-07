@@ -64,7 +64,7 @@ public class BrandDAOImpl implements IBrandDAO {
 		cq.select(brand);
 		javax.persistence.criteria.Path<String> br = brand.get("brandName");
 		
-		// Condition if searching by brand name
+		// search
 		if (brandName != "") {
 			Predicate name = cb.like(br, "%" + brandName + "%");
 			cq.where(name);
@@ -74,7 +74,6 @@ public class BrandDAOImpl implements IBrandDAO {
 
 		TypedQuery<Brand> query = em.createQuery(cq);
 
-		// Set pageable
 		int totalPage = (query.getResultList().size() - 1) / pageable.getPageSize() + 1;
 		query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
 		query.setMaxResults(pageable.getPageSize());
