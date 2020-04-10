@@ -1,9 +1,13 @@
 package com.magrabbit.controller;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.magrabbit.entity.Brand;
 import com.magrabbit.service.IBrandService;
@@ -37,7 +43,7 @@ public class BrandController {
 	public List<Brand> getAllBrand(){
 		return brandService.findAll();
 	}
-	@PostMapping(value = "/add-brand")
+	@PostMapping(value = "/insert-brand")
 	public ResponseModel addBrand(@RequestBody Brand brand) {
 		return brandService.addBrand(brand);
 	}
@@ -62,6 +68,25 @@ public class BrandController {
 			@RequestParam(name = "name") String name) {
 		return brandService.getBrandsByPageable(name, PageRequest.of(page, 4), page);
 	}
+	
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	 public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file){
+	  
+	  String originalFilename = file.getOriginalFilename();
+	     File destinationFile = new File("E:\\Internship\\ngocanh-pilot\\src\\assets\\images/"+originalFilename);
+	     try {
+	                 
+	       file.transferTo(destinationFile);	
+		   System.out.println("File path "+destinationFile.getPath());
+		   System.out.println("File size "+file.getSize());
+	  } catch (Exception e) {
+	   
+	   e.printStackTrace();
+	  }
+	  
+	  
+	  return new ResponseEntity(destinationFile.getPath(),HttpStatus.CREATED);
+	 }
 	
 	
 	
