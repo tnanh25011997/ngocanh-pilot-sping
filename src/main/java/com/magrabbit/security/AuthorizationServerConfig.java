@@ -22,51 +22,51 @@ import org.springframework.web.cors.CorsConfiguration;
 @Configuration
 @EnableAuthorizationServer
 @Order(2)
+/* responsible for generating tokens specific to a client */
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	private static final String CLIEN_ID = "ngocanh";
-	private static final String CLIENT_SECRET = "$2a$04$dgmN3EBtIhny3Mr4fqTTkO6PbD/is4XcrqFQ1xRFl8zjr7y7pNPpC";
+	static final String CLIEN_ID = "ngocanh";
+	static final String CLIENT_SECRET = "$2a$04$CaXnxuGPcUYH5EkJAGrjT.bhnJdeGACjN2EV6dbCQ85ELM.uTGHDi";
+	static final String GRANT_TYPE_PASSWORD = "password";
+	static final String AUTHORIZATION_CODE = "authorization_code";
+	static final String REFRESH_TOKEN = "refresh_token";
+	static final String IMPLICIT = "implicit";
+	static final String SCOPE_READ = "read";
+	static final String SCOPE_WRITE = "write";
+	static final String TRUST = "trust";
 	static final int ACCESS_TOKEN_VALIDITY_SECONDS = 1*60*60;
 	static final int FREFRESH_TOKEN_VALIDITY_SECONDS = 6*60*60;
 
 	@Autowired
-	@Qualifier("authenticationManagerBean")
 	private AuthenticationManager authenticationManager;
 
-	/**
-	 * Method help translating OAuth authentication information (in both directions)
-	 */
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		converter.setSigningKey("ngocanh");
 		return converter;
 	}
+	
+	/* Save token */
 
-	/**
-	 * Jwt token store
-	 */
 	@Bean
 	public TokenStore tokenStore() {
 		return new JwtTokenStore(accessTokenConverter());
 	}
 
-	/**
-	 * Configure that defines the client details service
-	 */
 	@Override
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
 
-		configurer.inMemory().withClient(CLIEN_ID).secret(CLIENT_SECRET)
-				.authorizedGrantTypes("password", "refresh_token")
-				.scopes("read", "write", "trust")
-				.accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
-				.refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
+		configurer
+				.inMemory()
+				.withClient(CLIEN_ID)
+				.secret(CLIENT_SECRET)
+				.authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT )
+				.scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
+				.accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS).
+				refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
 	}
 
-	/**
-	 * Method used to service requests for access tokens
-	 */
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 

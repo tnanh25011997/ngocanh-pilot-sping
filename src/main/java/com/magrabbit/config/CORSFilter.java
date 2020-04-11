@@ -16,9 +16,9 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@WebFilter("/**")
 public class CORSFilter implements Filter {
 
 	public CORSFilter() {
@@ -42,9 +42,11 @@ public class CORSFilter implements Filter {
 		}
 	}
 
+	
 	public void init(FilterConfig filterConfig) {
 	}
 
+	
 	public void destroy() {
 	}
 }

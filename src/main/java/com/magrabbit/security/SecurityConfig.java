@@ -5,8 +5,6 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,7 +18,7 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 import com.magrabbit.config.CORSFilter;
-import com.magrabbit.utility.Constrains;
+
 
 
 @Configuration
@@ -56,10 +54,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable().addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class).authorizeRequests()
 				.mvcMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
-		http.authorizeRequests().antMatchers(Constrains.TEST).hasRole("ADMIN").and()
+		http.authorizeRequests().antMatchers("/brand/**").hasRole("admin")
+		.antMatchers("/product/**").hasRole("admin").and()
 				.exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and().anonymous().disable();
 	}
 
+	@Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/oauth/token");
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+    }
 	
 	
 

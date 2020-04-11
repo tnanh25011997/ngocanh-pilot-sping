@@ -70,12 +70,12 @@ public class BrandController {
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	 public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file){
+	 public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file, @RequestParam(name = "logoName") String logoName){
 	  
 	  String originalFilename = file.getOriginalFilename();
-	     File destinationFile = new File("E:\\Internship\\ngocanh-pilot\\src\\assets\\images/"+originalFilename);
-	     try {
-	                 
+	  File destinationFile = new File("E:\\Internship\\ngocanh-pilot\\src\\assets\\images/"+logoName);
+	  try {
+                 
 	       file.transferTo(destinationFile);	
 		   System.out.println("File path "+destinationFile.getPath());
 		   System.out.println("File size "+file.getSize());

@@ -11,12 +11,13 @@ import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHand
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 import com.magrabbit.config.CORSFilter;
-import com.magrabbit.utility.Constrains;
 
 
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+	
+	
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
@@ -31,7 +32,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 		http.csrf().disable().addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class).authorizeRequests()
 				.mvcMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
-		http.authorizeRequests().antMatchers(Constrains.TEST).hasRole("ADMIN").and()
+		http.authorizeRequests().antMatchers("/brand/**").hasRole("admin")
+		.antMatchers("/product/**").hasRole("admin").and()
 				.exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler()).and().anonymous().disable();
 	}
 }
