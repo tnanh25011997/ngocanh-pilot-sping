@@ -36,7 +36,7 @@ public class Product {
 	private Double price;
 
 	@Column(name = "saleDate")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Asia/Singapore")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Asia/Ho_Chi_Minh")
 	private Date saleDate;
 
 	@Column(name = "image")

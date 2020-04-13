@@ -73,7 +73,7 @@ public class BrandController {
 	 public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file, @RequestParam(name = "logoName") String logoName){
 	  
 	  String originalFilename = file.getOriginalFilename();
-	  File destinationFile = new File("E:\\Internship\\ngocanh-pilot\\src\\assets\\images/"+logoName);
+	  File destinationFile = new File("C:\\opt\\pilot\\images/"+logoName);
 	  try {
                  
 	       file.transferTo(destinationFile);	
