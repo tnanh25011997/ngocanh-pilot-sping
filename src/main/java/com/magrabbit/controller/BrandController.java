@@ -32,6 +32,8 @@ import com.magrabbit.utility.ResponseModel;
 @RequestMapping("/brand")
 public class BrandController {
 	
+	static final int BRANDS_PER_ONE_PAGE = 4;
+	
 	@Autowired
 	IBrandService brandService;
 	@GetMapping(value ="/get-all-name")
@@ -66,7 +68,7 @@ public class BrandController {
 	@GetMapping(value = "/get-brands-paginate", params = { "page", "name" })
 	public PageModel<Brand> getBrandsByPageable(@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "name") String name) {
-		return brandService.getBrandsByPageable(name, PageRequest.of(page, 4), page);
+		return brandService.getBrandsByPageable(name, PageRequest.of(page, BRANDS_PER_ONE_PAGE), page);
 	}
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
@@ -61,7 +62,12 @@ public class BrandDAOImpl implements IBrandDAO {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
 		Root<Brand> brand = cq.from(Brand.class);
+		
+		//sort
+		Order sortById = cb.desc(brand.get("brandId"));
+		
 		cq.select(brand);
+		cq.orderBy(sortById);
 		javax.persistence.criteria.Path<String> br = brand.get("brandName");
 		
 		// search

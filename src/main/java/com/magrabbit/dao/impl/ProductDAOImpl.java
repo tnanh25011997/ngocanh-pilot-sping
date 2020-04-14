@@ -55,8 +55,13 @@ public class ProductDAOImpl implements IProductDAO {
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		Root<Brand> brand = cq.from(Brand.class);
 		Join<Brand, Product> product = brand.join("productSet");
+		
+		//sort
+		Order sortById = cb.desc(product.get("productId"));
+		
 		cq.select(product);
-
+		cq.orderBy(sortById);
+		
 		// Set condition
 		setConditionSearchProducts(searchModel, cb, cq, brand, product);
 
@@ -83,34 +88,34 @@ public class ProductDAOImpl implements IProductDAO {
 		javax.persistence.criteria.Path<String> br = brand.get("brandName");
 		javax.persistence.criteria.Path<Double> pri = product.get("price");
 		
-		// Condition if searching by product name
+		// if searching by product name
 		if (searchModel.getProductName() != "") {
 			Predicate productNameCondition = cb.like(pro,
 					"%" + searchModel.getProductName() + "%");
 			predicates.add(productNameCondition);
 		}
 
-		// Condition if searching by brand name
+		// if searching by brand name
 		if (searchModel.getBrandName() != "") {
 			Predicate brandNameCondition = cb.like(br, searchModel.getBrandName());
 			predicates.add(brandNameCondition);
 		}
 
-		// Condition if searching by min price
+		// if searching by min price
 		if (searchModel.getPriceFrom() != 0 && searchModel.getPriceTo() == 0) {
 			Predicate priceFromCondition = cb.ge(pri, searchModel.getPriceFrom());
 			predicates.add(priceFromCondition);
 			cq.orderBy(sortPrice);
 		}
 
-		// Condition if searching by max price
+		// if searching by max price
 		if (searchModel.getPriceFrom() == 0 && searchModel.getPriceTo() != 0) {
 			Predicate priceToCondition = cb.le(pri, searchModel.getPriceTo());
 			predicates.add(priceToCondition);
 			cq.orderBy(sortPrice);
 		}
 
-		// Condition if searching from min price to max price
+		// if searching from min price to max price
 		if (searchModel.getPriceFrom() != 0 && searchModel.getPriceTo() != 0) {
 			Predicate priceCondition = cb.between(pri, searchModel.getPriceFrom(),
 					searchModel.getPriceTo());
