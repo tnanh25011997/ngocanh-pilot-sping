@@ -34,22 +34,26 @@ public class ProductDAOImpl implements IProductDAO {
 	
 	@Autowired
 	private ProductRepository productRepository;
-
+	
+	@Override
 	public void insertOrUpdate(Product entity) {
 		// TODO Auto-generated method stub
 		productRepository.save(entity);
 	}
-
+	
+	@Override
 	public void delete(Product entity) {
 		// TODO Auto-generated method stub
 		productRepository.delete(entity);
 	}
-
+	
+	@Override
 	public List<Product> findAll() {
 		// TODO Auto-generated method stub
 		return productRepository.findAll();
 	}
-
+	
+	@Override
 	public PageModel<Product> getProductsByPageable(SearchModel searchModel, Pageable pageable, int currentPage) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
@@ -76,6 +80,8 @@ public class ProductDAOImpl implements IProductDAO {
 
 		return pageModel;
 	}
+	
+	
 	private void setConditionSearchProducts(SearchModel searchModel, CriteriaBuilder cb, CriteriaQuery<Product> cq,
 			Root<Brand> brand, Join<Brand, Product> product) {
 

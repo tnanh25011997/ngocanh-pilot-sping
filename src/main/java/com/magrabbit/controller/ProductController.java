@@ -24,6 +24,8 @@ import com.magrabbit.utility.SearchModel;
 @RequestMapping("/product")
 public class ProductController {
 	
+	static final int PRODUCTS_PER_ONE_PAGE = 4;
+	
 	@Autowired
 	IProductService productService;
 	
@@ -48,6 +50,6 @@ public class ProductController {
 	@PostMapping(value = "/get-products-paginate", params = { "page" })
 	public PageModel<Product> getProductsByPageable(@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestBody SearchModel searchModel) {
-		return productService.getProductsByPageable(searchModel, PageRequest.of(page, 4), page);
+		return productService.getProductsByPageable(searchModel, PageRequest.of(page, PRODUCTS_PER_ONE_PAGE), page);
 	}
 }

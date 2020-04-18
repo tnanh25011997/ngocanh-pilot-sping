@@ -1,7 +1,6 @@
 package com.magrabbit.controller;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,9 +82,8 @@ public class BrandController {
 		   System.out.println("File size "+file.getSize());
 	  } catch (Exception e) {
 	   
-	   e.printStackTrace();
+		  e.printStackTrace();
 	  }
-	  
 	  
 	  return new ResponseEntity(destinationFile.getPath(),HttpStatus.CREATED);
 	 }

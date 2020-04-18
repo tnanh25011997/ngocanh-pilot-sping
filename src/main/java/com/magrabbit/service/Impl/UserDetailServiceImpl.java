@@ -17,6 +17,7 @@ public class UserDetailServiceImpl implements IUserDetailService {
 	@Autowired
 	IUserDAO userDAO;
 	
+	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userDAO.findByUsername(username).get();
 		UserBuilder builder = null;

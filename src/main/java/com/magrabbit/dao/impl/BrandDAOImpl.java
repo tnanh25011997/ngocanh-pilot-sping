@@ -1,6 +1,6 @@
 package com.magrabbit.dao.impl;
 
-import java.nio.file.Path;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,28 +36,33 @@ public class BrandDAOImpl implements IBrandDAO {
 		
 		
 	}
-
+	
+	@Override
 	public void delete(Brand entity) {
 		// TODO Auto-generated method stub
 		brandRepository.delete(entity);
 		
 	}
-
+	
+	@Override
 	public List<String> getAllBrandName() {
 		// TODO Auto-generated method stub
 		return brandRepository.getAllBrandName();
 	}
-
+	
+	@Override
 	public List<Brand> findAll() {
 		// TODO Auto-generated method stub
 		return brandRepository.findAll();
 	}
-
+	
+	@Override
 	public Brand findBybrandName(String brandName) {
 		// TODO Auto-generated method stub
 		return brandRepository.findBybrandName(brandName);
 	}
-
+	
+	@Override
 	public PageModel<Brand> getBrandsByPageable(String brandName, Pageable pageable, int currentPage) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
@@ -88,10 +93,5 @@ public class BrandDAOImpl implements IBrandDAO {
 
 		return result;
 	}
-
-	
-	
-
-	
 
 }

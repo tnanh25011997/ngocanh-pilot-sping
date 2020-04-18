@@ -17,6 +17,8 @@ public class UserDAOImpl implements IUserDAO {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Override
 	public Optional<User> findByUsername(String username) {
 		return userRepository.findById(username);
 	}

@@ -16,6 +16,13 @@ import com.magrabbit.utility.SearchModel;
 
 @Service
 public class ProductServiceImpl implements IProductService {
+	
+	static final String INSERT_PRODUCT_SUCCESSFUL = "Insert Product Successful";
+	static final String EDIT_PRODUCT_SUCCESSFUL = "Edit Product Successful";
+	static final String DELETE_PRODUCT_SUCCESSFUL = "Delete Product Successful";
+	static final String INSERT_PRODUCT_FAILED = "Insert Product Failed";
+	static final String EDIT_PRODUCT_FAILED = "Edit Product Failed";
+	static final String DELETE_PRODUCT_FAILED = "Delete Product Failed";
 
 	@Autowired
 	private IProductDAO productDAO;
@@ -23,19 +30,44 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		return productDAO.findAll();
 	}
+	
+	@Override
 	public ResponseModel addProduct(Product entity) {
-		// TODO Auto-generated method stub
-		productDAO.insertOrUpdate(entity);
-		return new ResponseModel(HttpStatus.OK, "Insert Product successful");
+		try {
+			productDAO.insertOrUpdate(entity);
+			return new ResponseModel(HttpStatus.OK, INSERT_PRODUCT_SUCCESSFUL);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResponseModel(HttpStatus.BAD_REQUEST, INSERT_PRODUCT_FAILED);
+		}
+		
 	}
+	
+	@Override
 	public ResponseModel deleteProduct(Product entity) {
-		productDAO.delete(entity);
-		return new ResponseModel(HttpStatus.OK, "Delete Product successful");
+		try {
+			productDAO.delete(entity);
+			return new ResponseModel(HttpStatus.OK, DELETE_PRODUCT_SUCCESSFUL);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResponseModel(HttpStatus.BAD_REQUEST, DELETE_PRODUCT_FAILED);
+		}
+		
 	}
+	
+	@Override
 	public ResponseModel editProduct(Product entity) {
-		productDAO.insertOrUpdate(entity);
-		return new ResponseModel(HttpStatus.OK, "Edit Product successful");
+		try {
+			productDAO.insertOrUpdate(entity);
+			return new ResponseModel(HttpStatus.OK, EDIT_PRODUCT_SUCCESSFUL);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResponseModel(HttpStatus.BAD_REQUEST, EDIT_PRODUCT_FAILED);
+		}
+		
 	}
+	
+	@Override
 	public PageModel<Product> getProductsByPageable(SearchModel searchModel, Pageable pageable, int currentPage) {
 		
 		return productDAO.getProductsByPageable(searchModel, pageable, currentPage);
