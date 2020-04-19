@@ -89,7 +89,7 @@ public class ProductDAOImpl implements IProductDAO {
 		List<Predicate> predicates = new ArrayList<Predicate>();
 
 		// Sort order if search by price
-		Order sortPrice = cb.desc(product.get("price"));
+		Order sortPrice = cb.asc(product.get("price"));
 		javax.persistence.criteria.Path<String> pro = product.get("productName");
 		javax.persistence.criteria.Path<String> br = brand.get("brandName");
 		javax.persistence.criteria.Path<Double> pri = product.get("price");
@@ -105,6 +105,7 @@ public class ProductDAOImpl implements IProductDAO {
 		if (searchModel.getBrandName() != "") {
 			Predicate brandNameCondition = cb.like(br, searchModel.getBrandName());
 			predicates.add(brandNameCondition);
+			cq.orderBy(sortPrice);
 		}
 
 		// if searching by min price
