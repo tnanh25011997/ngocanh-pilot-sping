@@ -66,12 +66,12 @@ public class ProductDAOImpl implements IProductDAO {
 		cq.select(product);
 		cq.orderBy(sortById);
 		
-		// Set condition
+		// condition
 		setConditionSearchProducts(searchModel, cb, cq, brand, product);
 
 		TypedQuery<Product> query = em.createQuery(cq);
 
-		// Set pageable
+		// pageable
 		int totalPage = (query.getResultList().size() - 1) / pageable.getPageSize() + 1;
 		query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
 		query.setMaxResults(pageable.getPageSize());
@@ -88,41 +88,41 @@ public class ProductDAOImpl implements IProductDAO {
 		// List condition
 		List<Predicate> predicates = new ArrayList<Predicate>();
 
-		// Sort order if search by price
+		// sort search by price
 		Order sortPrice = cb.asc(product.get("price"));
 		javax.persistence.criteria.Path<String> pro = product.get("productName");
 		javax.persistence.criteria.Path<String> br = brand.get("brandName");
 		javax.persistence.criteria.Path<Double> pri = product.get("price");
 		
-		// if searching by product name
+		// search by product name
 		if (searchModel.getProductName() != "") {
 			Predicate productNameCondition = cb.like(pro,
 					"%" + searchModel.getProductName() + "%");
 			predicates.add(productNameCondition);
 		}
 
-		// if searching by brand name
+		// search by brand name
 		if (searchModel.getBrandName() != "") {
 			Predicate brandNameCondition = cb.like(br, searchModel.getBrandName());
 			predicates.add(brandNameCondition);
 			cq.orderBy(sortPrice);
 		}
 
-		// if searching by min price
+		// search by min price
 		if (searchModel.getPriceFrom() != 0 && searchModel.getPriceTo() == 0) {
 			Predicate priceFromCondition = cb.ge(pri, searchModel.getPriceFrom());
 			predicates.add(priceFromCondition);
 			cq.orderBy(sortPrice);
 		}
 
-		// if searching by max price
+		// search by max price
 		if (searchModel.getPriceFrom() == 0 && searchModel.getPriceTo() != 0) {
 			Predicate priceToCondition = cb.le(pri, searchModel.getPriceTo());
 			predicates.add(priceToCondition);
 			cq.orderBy(sortPrice);
 		}
 
-		// if searching from min price to max price
+		// search from min price to max price
 		if (searchModel.getPriceFrom() != 0 && searchModel.getPriceTo() != 0) {
 			Predicate priceCondition = cb.between(pri, searchModel.getPriceFrom(),
 					searchModel.getPriceTo());
